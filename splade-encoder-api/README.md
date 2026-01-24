@@ -11,7 +11,7 @@ Elasticsearch の `rank_features` フィールドなどと組み合わせて、�
 
 ## ディレクトリ構成
 
-- `src/splade_encoder_api/`: アプリケーションのコード
+- `api/`: アプリケーションのコード
 - `tests/`: テストコード
 
 ## セットアップ
@@ -27,7 +27,7 @@ uv sync
 ### API サーバーの起動
 
 ```bash
-uv run uvicorn src.splade_encoder_api.main:app
+uv run uvicorn api.main:app
 ```
 
 サーバーはデフォルトで `http://localhost:8000` で起動します。

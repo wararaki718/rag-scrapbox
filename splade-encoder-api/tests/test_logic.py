@@ -1,7 +1,7 @@
 from unittest.mock import MagicMock
 
 import torch
-from splade_encoder_api.encoder import SpladeEncoder
+from api.encoder import SpladeEncoder
 
 def test_encoder_logic():
     # Mock the tokenizer and model to avoid downloading/running them

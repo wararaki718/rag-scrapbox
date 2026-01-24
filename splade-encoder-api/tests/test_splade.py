@@ -1,5 +1,5 @@
 import json
-from splade_encoder_api.encoder import SpladeEncoder
+from api.encoder import SpladeEncoder
 
 
 def test_encode():
