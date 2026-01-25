@@ -14,7 +14,7 @@ class SpladeEncoder:
         self.model = AutoModelForMaskedLM.from_pretrained(model_id).to(self.device)
         self.model.eval()
 
-    def encode(self, text: str):
+    def encode(self, text: str, return_tokens: bool = True):
         inputs = self.tokenizer(text, return_tensors="pt").to(self.device)
         
         with torch.no_grad():
@@ -34,11 +34,19 @@ class SpladeEncoder:
         indices = torch.nonzero(sparse_vector).flatten()
         values = sparse_vector[indices]
         
-        # Convert to dictionary {token: weight}
-        result = {
-            self.tokenizer.convert_ids_to_tokens(int(idx.item())): float(val.item())
-            for idx, val in zip(indices, values)
-        }
+        # Convert to dictionary
+        if return_tokens:
+            # {token: weight}
+            result = {
+                self.tokenizer.convert_ids_to_tokens(int(idx.item())): float(val.item())
+                for idx, val in zip(indices, values)
+            }
+        else:
+            # {token_id: weight}
+            result = {
+                str(idx.item()): float(val.item())
+                for idx, val in zip(indices, values)
+            }
         
         return result
 
@@ -48,7 +56,7 @@ class SpladeEncoder:
         for k, v in sparse_dict.items():
             try:
                 # If k is an ID
-                token = self.tokenizer.decode([int(k)])
+                token = self.tokenizer.convert_ids_to_tokens(int(k))
                 new_dict[token] = v
             except (ValueError, TypeError):
                 # If k is already a token
