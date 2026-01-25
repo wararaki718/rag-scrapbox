@@ -7,7 +7,11 @@ def test_encoder_logic():
     # Mock the tokenizer and model to avoid downloading/running them
     encoder = SpladeEncoder.__new__(SpladeEncoder)
     encoder.device = "cpu"
+    def mock_convert(idx):
+        return f"token_{idx}"
+        
     encoder.tokenizer = MagicMock()
+    encoder.tokenizer.convert_ids_to_tokens = mock_convert
     encoder.model = MagicMock()
     
     # Mock tokenizer output

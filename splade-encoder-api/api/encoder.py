@@ -34,17 +34,23 @@ class SpladeEncoder:
         indices = torch.nonzero(sparse_vector).flatten()
         values = sparse_vector[indices]
         
-        # Convert to dictionary {token_id: weight}
+        # Convert to dictionary {token: weight}
         result = {
-            str(idx.item()): float(val.item())
+            self.tokenizer.convert_ids_to_tokens(int(idx.item())): float(val.item())
             for idx, val in zip(indices, values)
         }
         
         return result
 
     def get_tokens_and_weights(self, sparse_dict: dict):
-        """Helper to convert token IDs back to tokens for debugging or display"""
-        return {
-            self.tokenizer.decode([int(token_id)]): weight
-            for token_id, weight in sparse_dict.items()
-        }
+        """Helper to convert token IDs back to tokens (handles both ID and token keys for backward compatibility)"""
+        new_dict = {}
+        for k, v in sparse_dict.items():
+            try:
+                # If k is an ID
+                token = self.tokenizer.decode([int(k)])
+                new_dict[token] = v
+            except (ValueError, TypeError):
+                # If k is already a token
+                new_dict[k] = v
+        return new_dict

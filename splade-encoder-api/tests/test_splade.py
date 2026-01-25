@@ -12,13 +12,12 @@ def test_encode():
     sparse_vector = encoder.encode(text)
     assert len(sparse_vector) > 0
     
-    tokens_with_weights = encoder.get_tokens_and_weights(sparse_vector)
     # Check if some relevant Japanese tokens or related concepts are present
-    assert len(tokens_with_weights) > 0
+    # sparse_vector now contains tokens as keys
     
-    print("\nSparse Vector (first 5 elements):")
+    print("\nSparse Vector (first 10 elements):")
     # Sort by weight descending
-    sorted_tokens = sorted(tokens_with_weights.items(), key=lambda x: x[1], reverse=True)
+    sorted_tokens = sorted(sparse_vector.items(), key=lambda x: x[1], reverse=True)
     for token, weight in sorted_tokens[:10]:
         print(f"  {token}: {weight:.4f}")
     
