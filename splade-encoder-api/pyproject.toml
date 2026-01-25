@@ -21,7 +21,19 @@ dependencies = [
 pythonpath = ["api"]
 testpaths = ["tests"]
 
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "B"]
+ignore = []
+
+[tool.ruff.lint.isort]
+known-first-party = ["api"]
+
 [dependency-groups]
 dev = [
     "pytest>=9.0.2",
+    "ruff>=0.9.3",
 ]

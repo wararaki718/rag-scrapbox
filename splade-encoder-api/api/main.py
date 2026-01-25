@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+
 from .routers import encoder_router, health_router
 
 app = FastAPI(title="SPLADE Encoder API")

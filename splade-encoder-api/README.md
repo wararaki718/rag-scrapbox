@@ -38,12 +38,27 @@ uv run uvicorn api.main:app
 uv run pytest
 ```
 
+### リンターの実行
+
+```bash
+# チェックのみ
+uv run ruff check .
+
+# 自動修正（可能なもののみ）
+uv run ruff check --fix .
+
+# フォーマット
+uv run ruff format .
+```
+
 ## API エンドポイント
 
 ### 1. `POST /encode`
+
 テキストをスパースベクトルに変換します。
 
 **リクエスト本体:**
+
 ```json
 {
   "text": "Scrapboxは知識共有のためのツールです。"
@@ -51,6 +66,7 @@ uv run pytest
 ```
 
 **レスポンス:**
+
 ```json
 {
   "sparse_vector": {
@@ -61,11 +77,14 @@ uv run pytest
 ```
 
 ### 2. `POST /encode_debug`
+
 デバッグ用に、トークン（単語）と重みの対応を含めた結果を返します。
 
 ### 3. `GET /health`
+
 API の稼働状態を確認します。
 
 ## モデルの変更
+
 環境変数 `MODEL_ID` を指定することで、使用する SPLADE モデルを変更できます。
 例: `MODEL_ID=hotchpotch/japanese-splade-v2 uv run splade-encoder-api`
