@@ -1,7 +1,10 @@
+from typing import Any
+
 from elasticsearch import Elasticsearch, helpers
-from .config import settings
 from loguru import logger
-from typing import List, Dict, Any
+
+from .config import settings
+
 
 class ESClient:
     def __init__(self):
@@ -32,7 +35,7 @@ class ESClient:
         logger.info(f"Creating index: {self.index_name}")
         self.es.indices.create(index=self.index_name, body=mapping)
 
-    def bulk_index(self, documents: List[Dict[str, Any]]):
+    def bulk_index(self, documents: list[dict[str, Any]]):
         """
         ドキュメントを一括登録する
         """

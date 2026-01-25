@@ -1,8 +1,11 @@
-from .scrapbox import ScrapboxClient
+import sys
+
+from loguru import logger
+
 from .elasticsearch_client import ESClient
 from .processor import Processor
-from loguru import logger
-import sys
+from .scrapbox import ScrapboxClient
+
 
 def main():
     logger.info("Starting ingestion batch...")

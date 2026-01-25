@@ -51,6 +51,24 @@ cp .env.example .env
    uv run python -m batch.main
    ```
 
+## 開発
+
+### テストの実行
+
+```bash
+uv run pytest
+```
+
+### Linter (ruff) の実行
+
+```bash
+# チェックのみ
+uv run ruff check .
+
+# 自動修正
+uv run ruff check . --fix
+```
+
 ## インデックス構成
 
 Elasticsearch には以下のマッピングでデータが作成されます。

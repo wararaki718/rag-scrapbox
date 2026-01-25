@@ -1,7 +1,10 @@
+from typing import Any
+
 import requests
-from typing import List, Dict, Any
-from .config import settings
 from loguru import logger
+
+from .config import settings
+
 
 class Processor:
     def __init__(self):
@@ -9,7 +12,7 @@ class Processor:
         self.chunk_size = settings.CHUNK_SIZE
         self.chunk_overlap = settings.CHUNK_OVERLAP
 
-    def split_text(self, text: str) -> List[str]:
+    def split_text(self, text: str) -> list[str]:
         """
         テキストをチャンクに分割する。
         簡易的な実装として、一定の文字数で分割（オーバーラップあり）を行う。
@@ -27,7 +30,7 @@ class Processor:
             start += (self.chunk_size - self.chunk_overlap)
         return chunks
 
-    def get_sparse_vector(self, text: str) -> Dict[str, float]:
+    def get_sparse_vector(self, text: str) -> dict[str, float]:
         """
         SPLADE API を叩いてスパースベクトルを取得する
         """
@@ -39,7 +42,7 @@ class Processor:
             logger.error(f"Failed to get sparse vector: {e}")
             return {}
 
-    def process_page(self, page: Dict[str, Any]) -> List[Dict[str, Any]]:
+    def process_page(self, page: dict[str, Any]) -> list[dict[str, Any]]:
         """
         Scrapboxの1ページを複数のチャンク・ドキュメントに変換する
         """

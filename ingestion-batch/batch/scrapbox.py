@@ -1,7 +1,10 @@
+from typing import Any
+
 import requests
-from typing import List, Dict, Any
-from .config import settings
 from loguru import logger
+
+from .config import settings
+
 
 class ScrapboxClient:
     def __init__(self):
@@ -12,7 +15,7 @@ class ScrapboxClient:
         if self.sid:
             self.headers["Cookie"] = f"connect.sid={self.sid}"
 
-    def get_all_pages(self) -> List[Dict[str, Any]]:
+    def get_all_pages(self) -> list[dict[str, Any]]:
         """
         全ページのメタデータを取得し、詳細を取得する
         """
@@ -33,7 +36,7 @@ class ScrapboxClient:
                 
         return pages
 
-    def get_page(self, title: str) -> Dict[str, Any]:
+    def get_page(self, title: str) -> dict[str, Any]:
         """
         特定のページの詳細を取得する
         """

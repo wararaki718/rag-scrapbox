@@ -1,5 +1,5 @@
-import pytest
 from batch.processor import Processor
+
 
 def test_split_text():
     processor = Processor()
