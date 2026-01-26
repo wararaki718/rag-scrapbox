@@ -27,10 +27,17 @@ uv sync
 ### API サーバーの起動
 
 ```bash
-uv run uvicorn api.main:app
+uv run uvicorn api.main:app --host 0.0.0.0 --port 8000
 ```
 
 サーバーはデフォルトで `http://localhost:8000` で起動します。
+外部（Docker コンテナ間など）からアクセスする場合は `--host 0.0.0.0` を指定してください。
+
+### バックグラウンド実行
+
+```bash
+nohup uv run uvicorn api.main:app --host 0.0.0.0 --port 8000 > api.log 2>&1 &
+```
 
 ### テストの実行
 

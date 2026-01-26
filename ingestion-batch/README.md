@@ -52,6 +52,16 @@ cp .env.example .env
 uv run python -m batch.main
 ```
 
+格納されたデータのチェック
+
+```bash
+curl -X GET "http://localhost:9200/scrapbox-pages/_search?pretty" -H 'Content-Type: application/json' -d'
+{
+  "query": { "match_all": {} },
+  "size": 5
+}'
+```
+
 ## 開発
 
 ### テストの実行
