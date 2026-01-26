@@ -47,9 +47,10 @@ cp .env.example .env
    - [splade-encoder-api](../splade-encoder-api/) が `8000` ポート等で起動していること。
 
 2. **バッチ実行**:
-   ```bash
-   uv run python -m batch.main
-   ```
+
+```bash
+uv run python -m batch.main
+```
 
 ## 開発
 
