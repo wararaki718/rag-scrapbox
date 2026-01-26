@@ -58,6 +58,25 @@ uv run ruff check --fix .
 uv run ruff format .
 ```
 
+## Docker
+
+Docker または Docker Compose を使用して API を起動できます。
+
+### Compose を使用する場合 (推奨)
+
+ホストの Hugging Face キャッシュをマウントすることで、モデルの再ダウンロードを避けることができます。
+
+```bash
+docker compose up --build
+```
+
+### Docker を直接使用する場合
+
+```bash
+docker build -t splade-encoder-api .
+docker run -p 8000:8000 splade-encoder-api
+```
+
 ## API エンドポイント
 
 ### 1. `POST /encode`
