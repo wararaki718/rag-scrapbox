@@ -1,10 +1,20 @@
-FROM python:3.11-slim
+# Use a Python image with uv installed
+FROM ghcr.io/astral-sh/uv:python3.11-bookworm-slim
 
 WORKDIR /app
 
-COPY pyproject.toml .
-RUN pip install --no-cache-dir .
+# Copy dependency files
+COPY pyproject.toml uv.lock ./
 
-COPY api/ ./api/
+# Install dependencies using uv
+RUN uv sync --frozen --no-cache
 
-CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8001"]
+# Copy the application code
+COPY api /app/api
+COPY README.md /app/README.md
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1
+
+# Command to run the application
+CMD ["uv", "run", "uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8001"]

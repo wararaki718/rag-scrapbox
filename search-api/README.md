@@ -32,10 +32,25 @@
 
 ### Docker での起動
 
-プロジェクトのルートディレクトリで Docker Compose を使用して起動します。
+プロジェクトのルートディレクトリで Docker Compose を使用して起動します。コンテナ内では高速なパッケージマネージャーである `uv` を使用して環境構築が行われます。
 
 ```bash
 docker compose up -d search-api
+```
+
+### ローカルでの開発
+
+`uv` を使用して仮想環境を構築し、開発環境をセットアップできます。
+
+```bash
+# 仮想環境の作成と依存関係のインストール
+uv sync
+
+# Linter (Ruff) の実行
+uv run ruff check api
+
+# テストの実行
+uv run pytest
 ```
 
 ## エンドポイント

@@ -5,6 +5,7 @@ description = "Search API for RAG Scrapbox"
 authors = [
     {name = "Your Name", email = "you@example.com"}
 ]
+requires-python = ">=3.11"
 dependencies = [
     "fastapi>=0.100.0",
     "uvicorn>=0.22.0",
@@ -14,7 +15,13 @@ dependencies = [
     "google-genai>=0.1.0",
     "pydantic-settings>=2.0.0",
     "loguru>=0.7.0",
+]
+
+[dependency-groups]
+dev = [
     "ruff>=0.1.0",
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
 ]
 
 [tool.ruff]
@@ -24,6 +31,10 @@ select = ["E", "F", "I", "B"]
 [tool.ruff.isort]
 known-first-party = ["api"]
 
-[build-system]
-requires = ["setuptools>=61.0"]
-build-backend = "setuptools.build_meta"
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+[tool.uv]
+package = false
