@@ -1,0 +1,3 @@
+include:
+  - path: elasticsearch/compose.yml
+  - path: splade-encoder-api/compose.yml
