@@ -27,10 +27,6 @@ services:
     depends_on:
       - elasticsearch
 
-networks:
-  rag-net:
-    driver: bridge
-
 volumes:
   es_data:
     driver: local

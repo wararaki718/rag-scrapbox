@@ -9,6 +9,8 @@ services:
       - ~/.cache/huggingface:/root/.cache/huggingface
     environment:
       - PORT=8000
+    networks:
+      - rag-net
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 30s

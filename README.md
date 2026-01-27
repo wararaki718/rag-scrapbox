@@ -6,13 +6,21 @@ Scrapbox のデータを RAG (Retrieval-Augmented Generation) で利用するた
 
 - `elasticsearch`: 検索エンジン。SPLADE によるベクトル検索をサポートします。
 - `splade-encoder-api`: テキストを SPLADE ベクトルに変換する API。
+- `search-api`: 検索および Gemini による回答生成を行う Web API。
 - `ingestion-batch`: Scrapbox のデータを Elasticsearch に取り込むバッチ。
 
 ## 実行方法
 
+### 準備
+
+1. `.env` ファイルを作成し、Gemini API キーを設定します。
+   ```text
+   GEMINI_API_KEY=your_api_key_here
+   ```
+
 ### サービスの起動
 
-プロジェクト直下にある `compose.yml` を使用して、Elasticsearch と SPLADE Encoder API を一括で起動できます。
+プロジェクト直下にある `compose.yml` を使用して、必要なサービスを一括で起動できます。
 
 ```bash
 docker compose up -d
@@ -23,3 +31,4 @@ docker compose up -d
 - Elasticsearch: [http://localhost:9200](http://localhost:9200)
 - Kibana: [http://localhost:5601](http://localhost:5601)
 - SPLADE Encoder API: [http://localhost:8000](http://localhost:8000)
+- Search API: [http://localhost:8001](http://localhost:8001)

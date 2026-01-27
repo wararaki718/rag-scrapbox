@@ -1,0 +1,71 @@
+# Search API Server
+
+このサービスは、RAG (Retrieval-Augmented Generation) システムの推論フェーズ（リアルタイム処理）を担う Web API サーバーです。
+ユーザーの質問に対し、SPLADE によるスパース検索を用いて Elasticsearch から関連情報を取得し、Gemini 2.0 Flash を使用して回答を生成します。
+
+## 主な機能
+
+- **Query Encoding**: ユーザーの質問を `splade-encoder` を介してスパースベクトルに変換。
+- **Sparse Retrieval**: Elasticsearch の `rank_features` を利用した高速かつ意味的な検索。
+- **Contextual Generation**: 検索結果をコンテキストとして Gemini 2.0 Flash に渡し、根拠に基づいた回答を生成。
+
+## 技術スタック
+
+- **Framework**: FastAPI
+- **Search**: Elasticsearch (Async)
+- **LLM**: Gemini 2.0 Flash (`google-generativeai`)
+- **JSON Validation**: Pydantic v2
+
+## セットアップと起動
+
+### 環境変数
+
+以下の環境変数を設定する必要があります（`.env` ファイルまたは Docker Compose 経由）。
+
+| 変数名 | 説明 | デフォルト値 |
+| :--- | :--- | :--- |
+| `GEMINI_API_KEY` | Gemini API の API キー | (必須) |
+| `ELASTICSEARCH_URL` | Elasticsearch の接続先 URL | `http://localhost:9200` |
+| `ELASTICSEARCH_INDEX` | 検索対象のインデックス名 | `scrapbox-pages` |
+| `SPLADE_API_URL` | SPLADE Encoder API の URL | `http://localhost:8000/encode` |
+| `GEMINI_MODEL_NAME` | 使用する Gemini モデル名 | `gemini-2.0-flash-exp` |
+
+### Docker での起動
+
+プロジェクトのルートディレクトリで Docker Compose を使用して起動します。
+
+```bash
+docker compose up -d search-api
+```
+
+## エンドポイント
+
+### `POST /chat`
+
+ユーザーのクエリに基づいて回答を生成します。
+
+**Request Body:**
+```json
+{
+  "query": "Scrapbox について教えて"
+}
+```
+
+**Response Body:**
+```json
+{
+  "answer": "Scrapbox は...",
+  "sources": [
+    {
+      "text": "...",
+      "title": "タイトル",
+      "url": "https://scrapbox.io/...",
+      "score": 12.34
+    }
+  ]
+}
+```
+
+### `GET /health`
+
+サーバーの稼働状態を確認します。
