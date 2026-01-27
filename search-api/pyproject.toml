@@ -14,7 +14,15 @@ dependencies = [
     "google-genai>=0.1.0",
     "pydantic-settings>=2.0.0",
     "loguru>=0.7.0",
+    "ruff>=0.1.0",
 ]
+
+[tool.ruff]
+line-length = 88
+select = ["E", "F", "I", "B"]
+
+[tool.ruff.isort]
+known-first-party = ["api"]
 
 [build-system]
 requires = ["setuptools>=61.0"]

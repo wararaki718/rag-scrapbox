@@ -32,3 +32,13 @@ docker compose up -d
 - Kibana: [http://localhost:5601](http://localhost:5601)
 - SPLADE Encoder API: [http://localhost:8000](http://localhost:8000)
 - Search API: [http://localhost:8001](http://localhost:8001)
+
+### 動作確認
+
+`search-api` に対して以下のコマンドで質問を送ることができます。
+
+```bash
+curl -X POST "http://localhost:8001/chat" \
+     -H "Content-Type: application/json" \
+     -d '{"query": "Scrapboxの特徴を教えて"}'
+```

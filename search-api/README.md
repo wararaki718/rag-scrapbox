@@ -12,8 +12,8 @@
 ## 技術スタック
 
 - **Framework**: FastAPI
-- **Search**: Elasticsearch (Async)
-- **LLM**: Gemini 2.0 Flash (`google-generativeai`)
+- **Search**: Elasticsearch (Async / aiohttp)
+- **LLM**: Gemini 2.0 Flash (`google-genai`)
 - **JSON Validation**: Pydantic v2
 
 ## セットアップと起動
@@ -45,6 +45,7 @@ docker compose up -d search-api
 ユーザーのクエリに基づいて回答を生成します。
 
 **Request Body:**
+
 ```json
 {
   "query": "Scrapbox について教えて"
@@ -52,6 +53,7 @@ docker compose up -d search-api
 ```
 
 **Response Body:**
+
 ```json
 {
   "answer": "Scrapbox は...",

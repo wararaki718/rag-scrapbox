@@ -1,6 +1,8 @@
 from elasticsearch import AsyncElasticsearch
+
 from .config import settings
 from .models import SearchResult
+
 
 class SearchClient:
     def __init__(self):
@@ -11,7 +13,9 @@ class SearchClient:
         )
         self.index_name = settings.ELASTICSEARCH_INDEX
 
-    async def search(self, sparse_vector: dict[str, float], top_k: int = 5) -> list[SearchResult]:
+    async def search(
+        self, sparse_vector: dict[str, float], top_k: int = 5
+    ) -> list[SearchResult]:
         if not sparse_vector:
             return []
 
@@ -21,28 +25,24 @@ class SearchClient:
             for token, weight in sparse_vector.items()
         ]
 
-        query = {
-            "bool": {
-                "should": should_clauses
-            }
-        }
+        query = {"bool": {"should": should_clauses}}
 
         try:
             response = await self.es.search(
-                index=self.index_name,
-                query=query,
-                size=top_k
+                index=self.index_name, query=query, size=top_k
             )
 
             results = []
             for hit in response["hits"]["hits"]:
                 source = hit["_source"]
-                results.append(SearchResult(
-                    text=source["text"],
-                    title=source["title"],
-                    url=source["url"],
-                    score=hit["_score"]
-                ))
+                results.append(
+                    SearchResult(
+                        text=source["text"],
+                        title=source["title"],
+                        url=source["url"],
+                        score=hit["_score"],
+                    )
+                )
             return results
         except Exception as e:
             # In a real app, handle connection errors etc.

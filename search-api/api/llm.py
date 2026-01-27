@@ -1,6 +1,8 @@
 from google import genai
+
 from .config import settings
 from .models import SearchResult
+
 
 class GeminiClient:
     def __init__(self):
@@ -11,10 +13,9 @@ class GeminiClient:
         if not contexts:
             return "関連する情報が見つかりませんでした。"
 
-        context_text = "\n\n".join([
-            f"--- Source: {c.title} ({c.url}) ---\n{c.text}"
-            for c in contexts
-        ])
+        context_text = "\n\n".join(
+            [f"--- Source: {c.title} ({c.url}) ---\n{c.text}" for c in contexts]
+        )
 
         prompt = f"""あなたはScrapboxの知識を熟知したアシスタントです。
 提供されたコンテキスト情報のみを使用して、ユーザーの質問に回答してください。
@@ -28,7 +29,6 @@ class GeminiClient:
 """
 
         response = await self.client.aio.models.generate_content(
-            model=self.model_name,
-            contents=prompt
+            model=self.model_name, contents=prompt
         )
         return response.text
