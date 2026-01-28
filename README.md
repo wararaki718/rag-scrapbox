@@ -7,6 +7,7 @@ Scrapbox のデータを RAG (Retrieval-Augmented Generation) で利用するた
 - `elasticsearch`: 検索エンジン。SPLADE によるベクトル検索をサポートします。
 - `splade-encoder-api`: テキストを SPLADE ベクトルに変換する API。
 - `search-api`: 検索および Gemini による回答生成を行う Web API。
+- `web-ui`: ユーザーフレンドリーな検索インターフェースを提供する React (Vite) アプリケーション。
 - `ingestion-batch`: Scrapbox のデータを Elasticsearch に取り込むバッチ。
 
 ## 実行方法
@@ -32,6 +33,7 @@ docker compose up -d
 - Kibana: [http://localhost:5601](http://localhost:5601)
 - SPLADE Encoder API: [http://localhost:8000](http://localhost:8000)
 - Search API: [http://localhost:8001](http://localhost:8001)
+- Web UI: [http://localhost:3000](http://localhost:3000)
 
 ### 動作確認
 

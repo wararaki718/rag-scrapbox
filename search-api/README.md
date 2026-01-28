@@ -28,7 +28,7 @@
 | `ELASTICSEARCH_URL` | Elasticsearch の接続先 URL | `http://localhost:9200` |
 | `ELASTICSEARCH_INDEX` | 検索対象のインデックス名 | `scrapbox-pages` |
 | `SPLADE_API_URL` | SPLADE Encoder API の URL | `http://localhost:8000/encode` |
-| `GEMINI_MODEL_NAME` | 使用する Gemini モデル名 | `gemini-2.0-flash-exp` |
+| `GEMINI_MODEL_NAME` | 使用する Gemini モデル名 | `gemini-2.0-flash-lite` |
 
 ### Docker での起動
 
