@@ -1,37 +1,37 @@
 # Web UI (Vite + React + TypeScript)
 
-This directory contains the user interface for the RAG Search system, built with Vite and React.
+このディレクトリは、Vite と React で構築された RAG Search システムのユーザーインターフェースを含んでいます。
 
-## Features
+## 特徴
 
-- **React + TypeScript**: Modern component-based architecture.
-- **Vite**: Ultra-fast build tool and dev server.
-- **Tailwind CSS**: Utility-first styling.
-- **ESLint & Prettier**: Code linting and formatting.
-- **Nginx Proxy**: In production (Docker), Nginx serves the static files and proxies `/api` requests to the search API.
+- **React + TypeScript**: モダンなコンポーネントベースのアーキテクチャ。
+- **Vite**: 高速なビルドツールと開発サーバー。
+- **Tailwind CSS**: ユーティリティファーストのスタイリング。
+- **ESLint & Prettier**: コードの静的解析と自動整形。
+- **Nginx プロキシ**: プロダクション環境 (Docker) では、Nginx が静的ファイルを配信し、`/api` リクエストを検索 API へ転送します。
 
-## Execution
+## 実行方法
 
-### Development
+### 開発環境
 ```bash
 npm install
 npm run dev
 ```
 
-### Linting & Formatting
+### リンター & フォーマッタ
 ```bash
-# Run linter
+# リンターの実行
 npm run lint
 
-# Run formatter
+# フォーマッタ（自動整形）の実行
 npm run format
 ```
 
-### Production (Docker)
-Using the root `compose.yml` is recommended.
+### 本番環境 (Docker)
+プロジェクトルートの `compose.yml` を使用して起動することを推奨します。
 
 ```bash
 docker compose up -d
 ```
 
-Access via: [http://localhost:3000](http://localhost:3000)
+アクセス先: [http://localhost:3000](http://localhost:3000)
