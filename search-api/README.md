@@ -8,13 +8,16 @@
 - **Query Encoding**: ユーザーの質問を `splade-encoder` を介してスパースベクトルに変換。
 - **Sparse Retrieval**: Elasticsearch の `rank_features` を利用した高速かつ意味的な検索。
 - **Contextual Generation**: 検索結果をコンテキストとして Gemini 2.0 Flash に渡し、根拠に基づいた回答を生成。
+- **Resilient Generation**: `tenacity` による指数バックオフを用いたリトライ処理を実装し、LLM API の一時的なエラーに対する耐性を強化。
 
 ## 技術スタック
 
 - **Framework**: FastAPI
 - **Search**: Elasticsearch (Async / aiohttp)
 - **LLM**: Gemini 2.0 Flash (`google-genai`)
+- **Resilience**: Tenacity (Exponential backoff retry)
 - **JSON Validation**: Pydantic v2
+- **Package Manager**: uv
 
 ## セットアップと起動
 
