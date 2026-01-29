@@ -11,6 +11,6 @@ class Settings(BaseSettings):
     SPLADE_API_URL: str = Field(default="http://localhost:8000/encode")
     
     GEMINI_API_KEY: str | None = Field(default=None)
-    GEMINI_MODEL_NAME: str = Field(default="gemini-2.0-flash")
+    GEMINI_MODEL_NAME: str = Field(default="gemini-3-flash-preview")
 
 settings = Settings()
