@@ -1,3 +1,4 @@
+import asyncio
 from google import genai
 from loguru import logger
 from tenacity import (
@@ -34,11 +35,26 @@ class GeminiClient:
         if not contexts:
             return "関連する情報が見つかりませんでした。"
 
-        context_text = "\n\n".join(
-            [f"--- Source: {c.title} ({c.url}) ---\n{c.text}" for c in contexts]
-        )
+        # チャンクごとに分割
+        chunk_size = settings.GEMINI_CONTEXT_CHUNK_SIZE
+        chunks = [
+            contexts[i : i + chunk_size] for i in range(0, len(contexts), chunk_size)
+        ]
 
-        prompt = f"""あなたはScrapboxの知識を熟知したアシスタントです。
+        current_answer = ""
+        for i, chunk in enumerate(chunks):
+            # 2回目以降のチャンク処理の前にRPM制限のための遅延を入れる
+            if i > 0:
+                logger.info(f"Waiting {settings.GEMINI_RPM_DELAY}s for RPM limit...")
+                await asyncio.sleep(settings.GEMINI_RPM_DELAY)
+
+            context_text = "\n\n".join(
+                [f"--- Source: {c.title} ({c.url}) ---\n{c.text}" for c in chunk]
+            )
+
+            if i == 0:
+                # 初回の回答生成
+                prompt = f"""あなたはScrapboxの知識を熟知したアシスタントです。
 提供されたコンテキスト情報のみを使用して、ユーザーの質問に回答してください。
 回答の最後には、参考にしたページのタイトルとURLを記載してください。
 
@@ -48,5 +64,24 @@ class GeminiClient:
 # ユーザーの質問
 {query}
 """
+            else:
+                # 回答のブラッシュアップ（Refine）
+                prompt = f"""あなたはScrapboxの知識を熟知したアシスタントです。
+既存の回答を、新しく追加されたコンテキスト情報を用いて更新・改善してください。
+必要に応じて情報を追加し、矛盾がある場合は新しい情報を優先してください。
+回答の最後には、これまでに参考にしたすべてのページのタイトルとURLを記載してください。
 
-        return await self._generate_with_retry(prompt)
+# ユーザーの質問
+{query}
+
+# 既存の回答
+{current_answer}
+
+# 追加のコンテキスト
+{context_text}
+"""
+
+            logger.info(f"Processing chunk {i+1}/{len(chunks)}...")
+            current_answer = await self._generate_with_retry(prompt)
+
+        return current_answer
